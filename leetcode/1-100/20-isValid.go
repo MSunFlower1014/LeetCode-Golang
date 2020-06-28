@@ -13,7 +13,6 @@ import "fmt"
 注意空字符串可被认为是有效字符串。
 */
 func main() {
-	print("")
 	fmt.Print(isValid("()"))
 }
 func isValid(s string) bool {
