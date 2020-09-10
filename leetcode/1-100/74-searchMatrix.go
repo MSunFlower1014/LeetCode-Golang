@@ -1,0 +1,46 @@
+package main
+
+/*
+74. 搜索二维矩阵
+编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：
+
+每行中的整数从左到右按升序排列。
+每行的第一个整数大于前一行的最后一个整数。
+示例 1:
+
+输入:
+matrix = [
+  [1,   3,  5,  7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 50]
+]
+target = 3
+输出: true
+*/
+func main() {
+
+}
+
+func searchMatrix(matrix [][]int, target int) bool {
+	n := len(matrix)
+	if n == 0 || len(matrix[0]) == 0 {
+		return false
+	}
+	m := len(matrix[0])
+	l, r := 0, n*m-1
+
+	for l <= r {
+		mid := (l + r) / 2
+		i := mid / m
+		j := mid % m
+		if matrix[i][j] == target {
+			return true
+		}
+		if matrix[i][j] > target {
+			r = mid - 1
+		} else {
+			l = mid + 1
+		}
+	}
+	return false
+}
