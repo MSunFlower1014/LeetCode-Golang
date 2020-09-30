@@ -43,6 +43,7 @@ func sortColors(nums []int) {
 			nums[redIndex] = 0
 			redIndex++
 			continue
+			a := make(map[int]int)
 		}
 	}
 }
