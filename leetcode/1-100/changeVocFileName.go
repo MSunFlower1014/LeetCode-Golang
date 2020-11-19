@@ -2,9 +2,8 @@ package main
 
 import (
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
-	"strings"
+	"os"
 )
 
 /*
@@ -32,37 +31,46 @@ type annotation struct {
 }
 
 func main() {
-	basePath := "D:\\Hex\\Work-Order\\印章识别\\reset\\re-sign\\sign\\Annotations"
-	files, error := ioutil.ReadDir(basePath)
-	if error != nil {
-		fmt.Print(error)
+	files, err := ioutil.ReadDir("D:\\Hex\\Target\\psenet\\res-txt")
+	if err != nil {
+		return
 	}
-
+	i := 0
 	for _, file := range files {
-		v := voc{}
-		fileName := file.Name()
-		fullPath := basePath + "/" + fileName
-		content, error := ioutil.ReadFile(fullPath)
-		if error != nil {
-			fmt.Print(error)
-			continue
-		}
-		err := xml.Unmarshal([]byte(content), &v)
-		if err != nil {
-			fmt.Printf("error: %v", err)
-			return
-		}
-		fileName = strings.ReplaceAll(fileName, "xml", "jpg")
-		v.FileName = fileName
-
-		output, err := xml.MarshalIndent(v, "", "\t")
-		if err != nil {
-			fmt.Printf("error: %v\n", err)
-		}
-
-		err = ioutil.WriteFile(fullPath, output, 0666)
-		if err != nil {
-			fmt.Printf("error: %v\n", err)
-		}
+		os.Rename("D:\\Hex\\Target\\psenet\\res-txt\\"+file.Name(), "D:\\Hex\\Target\\psenet\\res-txt\\"+(string(i))+".txt")
+		i++
 	}
+	//basePath := "D:\\Hex\\Work-Order\\印章识别\\reset\\re-sign\\sign\\Annotations"
+	//files, error := ioutil.ReadDir(basePath)
+	//if error != nil {
+	//	fmt.Print(error)
+	//}
+	//
+	//for _, file := range files {
+	//	v := voc{}
+	//	fileName := file.Name()
+	//	fullPath := basePath + "/" + fileName
+	//	content, error := ioutil.ReadFile(fullPath)
+	//	if error != nil {
+	//		fmt.Print(error)
+	//		continue
+	//	}
+	//	err := xml.Unmarshal([]byte(content), &v)
+	//	if err != nil {
+	//		fmt.Printf("error: %v", err)
+	//		return
+	//	}
+	//	fileName = strings.ReplaceAll(fileName, "xml", "jpg")
+	//	v.FileName = fileName
+	//
+	//	output, err := xml.MarshalIndent(v, "", "\t")
+	//	if err != nil {
+	//		fmt.Printf("error: %v\n", err)
+	//	}
+	//
+	//	err = ioutil.WriteFile(fullPath, output, 0666)
+	//	if err != nil {
+	//		fmt.Printf("error: %v\n", err)
+	//	}
+	//}
 }
