@@ -45,7 +45,7 @@ func largestRectangleArea(heights []int) int {
 	return max
 }
 
-//寻找每个柱子的左右边界后计算
+//2.寻找每个柱子的左右边界后计算
 func largestRectangleArea2(heights []int) int {
 	length := len(heights)
 	if length == 0 {
@@ -77,5 +77,94 @@ func largestRectangleArea2(heights []int) int {
 		}
 	}
 
+	return max
+}
+
+//3.单调栈
+func largestRectangleArea3(heights []int) int {
+	length := len(heights)
+	if length == 0 {
+		return 0
+	}
+	//每heights中元素的左右边界
+	left, right := make([]int, length), make([]int, length)
+	//单调递减s栈
+	monoStack := []int{}
+
+	for i := 0; i < length; i++ {
+		//清除大于 height[i] 的栈内元素
+		for len(monoStack) > 0 && heights[monoStack[len(monoStack)-1]] >= heights[i] {
+			monoStack = monoStack[:len(monoStack)-1]
+		}
+		//如果栈为空，则之前元素都大于 height[i] ，左边界为-1
+		if len(monoStack) == 0 {
+			left[i] = -1
+		} else {
+			//首个小于 height[i] 的值的索引为 monoStack[len(monoStack)-1] ，即为左边界
+			left[i] = monoStack[len(monoStack)-1]
+		}
+		//入栈
+		monoStack = append(monoStack, i)
+	}
+	monoStack = []int{}
+	for i := length - 1; i >= 0; i-- {
+		for len(monoStack) > 0 && heights[monoStack[len(monoStack)-1]] >= heights[i] {
+			monoStack = monoStack[:len(monoStack)-1]
+		}
+		if len(monoStack) == 0 {
+			right[i] = length
+		} else {
+			right[i] = monoStack[len(monoStack)-1]
+		}
+		monoStack = append(monoStack, i)
+	}
+
+	max := 0
+	for i := 0; i < length; i++ {
+		temp := (right[i] - left[i] - 1) * heights[i]
+		if max < temp {
+			max = temp
+		}
+	}
+	return max
+}
+
+//4.单调栈+常数优化
+func largestRectangleArea4(heights []int) int {
+	length := len(heights)
+	if length == 0 {
+		return 0
+	}
+	//每heights中元素的左右边界
+	left, right := make([]int, length), make([]int, length)
+	//单调递减s栈
+	monoStack := []int{}
+	for i := 0; i < length; i++ {
+		right[i] = length
+	}
+	for i := 0; i < length; i++ {
+		//清除大于 height[i] 的栈内元素
+		for len(monoStack) > 0 && heights[monoStack[len(monoStack)-1]] >= heights[i] {
+			right[monoStack[len(monoStack)-1]] = i
+			monoStack = monoStack[:len(monoStack)-1]
+		}
+		//如果栈为空，则之前元素都大于 height[i] ，左边界为-1
+		if len(monoStack) == 0 {
+			left[i] = -1
+		} else {
+			//首个小于 height[i] 的值的索引为 monoStack[len(monoStack)-1] ，即为左边界
+			left[i] = monoStack[len(monoStack)-1]
+		}
+		//入栈
+		monoStack = append(monoStack, i)
+	}
+
+	max := 0
+	for i := 0; i < length; i++ {
+		temp := (right[i] - left[i] - 1) * heights[i]
+		if max < temp {
+			max = temp
+		}
+	}
 	return max
 }
