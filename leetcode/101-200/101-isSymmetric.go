@@ -34,7 +34,7 @@ type TreeNode struct {
 }
 
 func isSymmetric(root *TreeNode) bool {
-	checkSymmetric(root, root)
+	return checkSymmetric(root, root)
 }
 
 func checkSymmetric(p, q *TreeNode) bool {
