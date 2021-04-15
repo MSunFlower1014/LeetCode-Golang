@@ -14,3 +14,9 @@ Redis维护了一个24位时钟，可以简单理解为当前系统的时间戳�
 LFU (Least frequently used) 最不经常使用，如果一个数据在最近一段时间内使用次数很少，那么在将来一段时间内被使用的可能性也很小。  
 LFU把原来的key对象的内部时钟的24位分成两部分，前16位还代表时钟，后8位代表一个计数器。16位的情况下如果还按照秒为单位就会导致不够用，所以一般这里以时钟为单位。而后8位表示当前key对象的访问频率，8位只能代表255，但是redis并没有采用线性上升的方式，而是通过一个复杂的公式，通过配置两个参数来调整数据的递增速度。  
 FIFO (Fist in first out) 先进先出， 如果一个数据最先进入缓存中，则应该最早淘汰掉。  
+
+[单链表反转](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/leetcode/201-299/206-reverseList.go)  
+[链表中环的检测](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/leetcode/101-200/141-hasCycle.go)  
+[两个有序的链表合并](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/leetcode/1-100/21-mergeTwoLists.go)  
+[删除链表倒数第 n 个结点](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/leetcode/1-100/19-removeNthFromEnd.go)  
+[求链表的中间结点](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/leetcode/800-899/876-middleNode.go)

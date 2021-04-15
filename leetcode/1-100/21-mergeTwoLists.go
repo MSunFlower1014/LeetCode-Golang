@@ -17,6 +17,7 @@ func main() {
 
 /*
 递归调用
+比较头节点大小，包留较小值，并递归合并较小值.next 和另一链表
 */
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	if l1 == nil {
@@ -34,6 +35,9 @@ func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
 }
 
+/*
+循环合并
+*/
 func mergeTwoLists2(l1 *ListNode, l2 *ListNode) *ListNode {
 	var result *ListNode = &ListNode{Val: -1}
 	var prev = result
