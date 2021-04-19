@@ -1,3 +1,8 @@
+---
+title: TCP连接那些事
+date: 2021-04-19 11:18:23
+tags:
+---
 # TCP
 传输控制协议
 ## 可靠性保证
@@ -41,7 +46,7 @@
 2.目的端收到后，回复 SEQ+1 的ACK以及自身的初始序号ISN2  
 3.客户端回复 ISN2 +1 的ACK  
 
-![TCP_OPEN](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/protocol/img/TCP.png?raw=true)
+![TCP_OPEN](https://github.com/MSunFlower1014/LeetCode-Golang/blob/master/protocol/img/TCP.png?raw=true)
 
 ISN随时间变化，因此每个连接都具有不同的ISN，RFC 793 [Postel 1981c]指出ISN可看作是一个32比特的计数器，每4ms加1。  
 这样选择序号的目的在于防止在网络中被延迟的分组在以后又被传送，而导致某个连接的一方对它作错误的解释，保证应用层接收到的数据不会因为网络上的传输的问题而乱序
@@ -52,7 +57,7 @@ ISN随时间变化，因此每个连接都具有不同的ISN，RFC 793 [Postel 1
 3.服务器发送FIN，告诉客户端已完成数据发送  
 4.客户端回复ACK，告诉服务端已收到  
 
-![TCP_CLOSE](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/protocol/img/TCP_CLOSE.png?raw=true)
+![TCP_CLOSE](https://github.com/MSunFlower1014/LeetCode-Golang/blob/master/protocol/img/TCP_CLOSE.png?raw=true)
 
 一个TCP连接是全双工（即数据在两个方向上能同时传递），因此每个方向必须单独地进行关闭。  
 这原则就是当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向连接。   
@@ -65,3 +70,9 @@ MSL表示报文段最大生存时间，是任何报文段被丢弃前在网络�
 1.当ACK丢失时，对方会重发FIN，等待2SML可以保证对方收到了ACK（如果2MSL未重发表示收到ACK）。  
 2.使本连接持续的时间所产生的所有报文段都从网络中消失。这样就可以使下一个新的连接中不会出现这种旧的连接请求的报文段。   
 在连接处于2MSL等待时，任何迟到的报文段将被丢弃。 
+
+## 粘包
+TCP为提高传输效率，发送方往往要收集到足够多的数据后才发送一个TCP段。  
+若连续几次需要send的数据都很少，通常TCP会根据优化算法把这些数据合成一个TCP段后一次发送出去，这样接收方就收到了粘包数据。  
+解决：为字节流加上自定义固定长度报头，报头中包含字节流长度，然后一次send到对端，对端在接收时，先从缓存中取出定长的报头，然后再取真实数据。  
+比如ESB自定义协议：8位报文长度 + xml格式报文，长度参数可以解决粘包和拆包报文  
