@@ -33,7 +33,7 @@
 
 ## 半连接和全连接
 当服务器接收到客户端的SYN后，会将连接放入半连接队列，回复ACK及自身SEQ，当收到客户端回复的ACK时，将连接从半连接队列移除放入全连接队列。  
-如果全连接队列满了，会丢弃客户端回复，并定时重发 回复ACK及自身SEQ 。
+如果全连接队列满了，会丢弃客户端回复，并定时重发 回复ACK及自身SEQ 。  
 [参考连接](https://www.jianshu.com/p/6a0fcb1008d6)
 
 ## 三次握手
@@ -41,7 +41,7 @@
 2.目的端收到后，回复 SEQ+1 的ACK以及自身的初始序号ISN2  
 3.客户端回复 ISN2 +1 的ACK  
 
-![alt tcp](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/protocol/img/TCP.png)
+![TCP_OPEN](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/protocol/img/TCP.png?raw=true)
 
 ISN随时间变化，因此每个连接都具有不同的ISN，RFC 793 [Postel 1981c]指出ISN可看作是一个32比特的计数器，每4ms加1。  
 这样选择序号的目的在于防止在网络中被延迟的分组在以后又被传送，而导致某个连接的一方对它作错误的解释，保证应用层接收到的数据不会因为网络上的传输的问题而乱序
@@ -52,7 +52,7 @@ ISN随时间变化，因此每个连接都具有不同的ISN，RFC 793 [Postel 1
 3.服务器发送FIN，告诉客户端已完成数据发送  
 4.客户端回复ACK，告诉服务端已收到  
 
-![alt tcp_close](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/protocol/img/TCP_CLOSE.png)
+![TCP_CLOSE](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/protocol/img/TCP_CLOSE.png?raw=true)
 
 一个TCP连接是全双工（即数据在两个方向上能同时传递），因此每个方向必须单独地进行关闭。  
 这原则就是当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向连接。   
