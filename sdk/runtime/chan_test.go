@@ -150,3 +150,22 @@ func TestCloseChan(t *testing.T) {
 	}()
 	c <- 1
 }
+
+func TestTransmitChan(t *testing.T) {
+	start, end := make(chan bool), make(chan bool)
+	head := start
+	for i := 0; i < 10; i++ {
+		end = make(chan bool)
+		temp := i
+		go func(head, end chan bool, i int) {
+			<-head
+			t.Logf("goroutine %v doing", i)
+			end <- true
+		}(head, end, temp)
+		head = end
+	}
+	start <- true
+	<-end
+
+	t.Logf("main goroutine is end")
+}

@@ -15,3 +15,12 @@
 
 # struct结构体
 [struct结构体](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/sdk/runtime/struct.md)
+
+# interface接口
+[interface接口](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/sdk/runtime/interface_test.go)
+
+# point指针
+[point指针](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/sdk/runtime/point_test.go)
+
+# test测试
+[test测试](https://github.com/MSunFlower1014/LeetCode-Golang/tree/master/sdk/base/testNote_test.go)
