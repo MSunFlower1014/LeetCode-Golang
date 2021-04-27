@@ -21,21 +21,55 @@ import "fmt"
 输出：1
 */
 func main() {
-	fmt.Print(SumIntDigits(48))
+	fmt.Print(movingCount(38, 15, 9))
 }
 
 func movingCount(m int, n int, k int) int {
-	return 0
+	if k == 0 {
+		return 1
+	}
+
+	vis := make([][]bool, m)
+	for i := 0; i < m; i++ {
+		vis[i] = make([]bool, n)
+	}
+	ans := 1
+	vis[0][0] = true
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if (i == 0 && j == 0) || SumIntDigits(i)+SumIntDigits(j) > k {
+				continue
+			}
+
+			if i-1 >= 0 {
+				vis[i][j] = UnionBool(vis[i-1][j], vis[i][j])
+			}
+			if j-1 >= 0 {
+				vis[i][j] = UnionBool(vis[i][j-1], vis[i][j])
+			}
+			if vis[i][j] {
+				ans++
+			}
+		}
+	}
+	return ans
 }
 
 func SumIntDigits(i int) int {
-	result := i % 10
-	for true {
-		i = i / 10
-		if i == 0 {
-			break
-		}
+	result := 0
+	for i != 0 {
 		result = result + i%10
+		i = i / 10
 	}
 	return result
+}
+
+func UnionBool(x, y bool) bool {
+	if x {
+		return true
+	}
+	if y {
+		return true
+	}
+	return false
 }
