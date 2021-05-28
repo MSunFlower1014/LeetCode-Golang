@@ -41,3 +41,19 @@ func BubbleSort(list []int) {
 		}
 	}
 }
+
+func SwapSort(nums []int) {
+	length := len(nums)
+	if length <= 1 {
+		return
+	}
+	for i := 0; i < length-1; i++ {
+		for j := 0; j < length-1; j++ {
+			if nums[j] > nums[j+1] {
+				temp := nums[j+1]
+				nums[j+1] = nums[j]
+				nums[j] = temp
+			}
+		}
+	}
+}
