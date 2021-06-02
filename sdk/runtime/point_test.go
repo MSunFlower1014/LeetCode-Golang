@@ -28,4 +28,9 @@ func TestPoint(t *testing.T) {
 	name := (*string)(unsafe.Pointer(nameP))
 	age := (*int)(unsafe.Pointer(p + ageOffset))
 	t.Logf("name : %v , age : %v\n", *name, *age)
+
+	a := 0
+
+	t.Logf("point : %v , value :  %v , * value : %v", &a, *&a, *&*&a)
+
 }

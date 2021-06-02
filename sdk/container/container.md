@@ -2,7 +2,7 @@
 container  
 ## heap
 可用来实现[优先队列](https://github.com/golang/go/blob/master/src/container/heap/example_pq_test.go)  
-push或pop元素后会根据元素大小调整到对应位置（二分法实现）  
+push或pop元素后会根据元素大小调整到对应位置（堆排序）  
 
 ## list
 双向链表实现
