@@ -11,7 +11,7 @@ import "fmt"
 
 Heapify 复杂度为Ologn
 
-总体复杂度为 N * logn
+总体复杂度为 logn+log(n-1) + .... + log1 = log(n-1)! = N * logn
 
 不稳定算法
 */
@@ -27,6 +27,7 @@ func main() {
 	}
 	fmt.Printf("heapify is %v \n", nums)
 
+	//将堆顶元素与末尾元素交换，堆长度减一，重新维护堆
 	for i := length - 1; i > 0; i-- {
 		Swap(nums, 0, i)
 		Heapify(nums, i, 0)

@@ -8,7 +8,7 @@ import (
 )
 
 /*
-接口由两个元素组成：类型和值
+接口由两个元素组成：类型和值，有方法的还会包含其方法指针数组
 var v *model.Book
 var i interface{}
 i = v

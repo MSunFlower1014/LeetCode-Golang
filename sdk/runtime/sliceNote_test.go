@@ -30,7 +30,7 @@ type slice struct {
 使用new创建返回的是一个已清零内存数组指针
 使用make创建返回的是参数对应类型，包含数组起点指针，长度和容量
 
-Ps:数组为值类型，切片为引用类型
+Ps:数组为值类型，切片为引用类型，传递时需要特别注意
 */
 
 func TestSliceNew(t *testing.T) {

@@ -50,6 +50,7 @@ func TestPoolBase(t *testing.T) {
 	// disable GC so we can control when it happens.
 	defer debug.SetGCPercent(debug.SetGCPercent(-1))
 	var p sync.Pool
+
 	if p.Get() != nil {
 		t.Fatal("expected empty")
 	}
