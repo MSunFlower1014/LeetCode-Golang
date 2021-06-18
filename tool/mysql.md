@@ -5,7 +5,7 @@
 以age 和gender为索引，显然age要放在前面，因为性别就两种选择男或女，选择性不如age  
 2.永远设置主键且最好设置为int且自增，字符串的排序比int复杂很多  
 3.多使用explain查看SQL复杂度  
-4.尽量设置not null，存在null列会使索引失效
+4.尽量设置not null，存在null列会使索引失效  
 5.拆分大的insert和delete，分批次执行  
 6.明确只有一条的时候加 LIMIT 1  
 7.like条件 % 不能放在前面，会导致索引树排序失效  
@@ -14,8 +14,8 @@
 Inner join 内连接，在两张表进行连接查询时，只保留两张表中完全匹配的结果集；  
 left join 在两张表进行连接查询时，会返回左表所有的行，即使在右表中没有匹配的记录；  
 right join 在两张表进行连接查询时，会返回右表所有的行，即使在左表中没有匹配的记录。  
-10.不要使用!=  
-11.count(字段)<count(主键 id)<count(1)≈count(*)，所以我建议你，尽量使用 count(*)
+10.不要使用!=或in，会使索引失效  
+11.count(字段)<count(主键 id)<count(1)≈count(*)，所以我建议你，尽量使用 count(*)  
 
 
 ## 慢查询
@@ -103,13 +103,13 @@ sync_binlog=N(N>1) 的时候，表示每次提交事务都 write，但累积 N �
 设置为 1 的时候，表示每次事务提交时都将 redo log 直接持久化到磁盘；  
 设置为 2 的时候，表示每次事务提交时都只是把 redo log 写到 page cache。  
 ##死锁
-* 间隙锁互相保护导致死锁：
+* 间隙锁互相保护导致死锁：  
 session A 执行 select … for update 语句，由于 id=9 这一行并不存在，因此会加上间隙锁 (5,10);  
 session B 执行 select … for update 语句，同样会加上间隙锁 (5,10)，间隙锁之间不会冲突，因此这个语句可以执行成功；  
 session B 试图插入一行 (9,9,9)，被 session A 的间隙锁挡住了，只好进入等待；  
-session A 试图插入一行 (9,9,9)，被 session B 的间隙锁挡住了。
+session A 试图插入一行 (9,9,9)，被 session B 的间隙锁挡住了。  
 
-* 行锁等待
+* 行锁等待  
 session A 执行 select … for update 语句，获取行锁 9;  
 session B 执行 select … for update 语句，获取行锁 8;  
 session A 更新9后需要更新8，由于8的行锁被B持有，进入等待；  
