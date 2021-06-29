@@ -45,7 +45,7 @@ tags:
 1.客户端发送SYN，携带初始序号ISN到目的端服务器  
 2.目的端收到后，回复 SEQ+1 的ACK以及自身的初始序号ISN2  
 3.客户端回复 ISN2 +1 的ACK  
-
+确定双方网络畅通及消息序号，保证消息按序到达  
 ![TCP_OPEN](https://github.com/MSunFlower1014/LeetCode-Golang/blob/master/protocol/img/TCP.png?raw=true)
 
 ISN随时间变化，因此每个连接都具有不同的ISN，RFC 793 [Postel 1981c]指出ISN可看作是一个32比特的计数器，每4ms加1。  
@@ -56,6 +56,7 @@ ISN随时间变化，因此每个连接都具有不同的ISN，RFC 793 [Postel 1
 2.服务器回复ACK，告诉客户端已收到  
 3.服务器发送FIN，告诉客户端已完成数据发送  
 4.客户端回复ACK，告诉服务端已收到  
+确保双向关闭连接，且关闭信息到达  
 
 ![TCP_CLOSE](https://github.com/MSunFlower1014/LeetCode-Golang/blob/master/protocol/img/TCP_CLOSE.png?raw=true)
 
@@ -76,6 +77,8 @@ TCP为提高传输效率，发送方往往要收集到足够多的数据后才�
 若连续几次需要send的数据都很少，通常TCP会根据优化算法把这些数据合成一个TCP段后一次发送出去，这样接收方就收到了粘包数据。  
 解决：为字节流加上自定义固定长度报头，报头中包含字节流长度，然后一次send到对端，对端在接收时，先从缓存中取出定长的报头，然后再取真实数据。  
 比如ESB自定义协议：8位报文长度 + xml格式报文，长度参数可以解决粘包和拆包报文  
+或者分块传输，携带每块数据长度，结尾以空块结束  
+非长连接可通过关闭连接结束  
 
 ## 快速重传
 在收到一个失序的报文段时，TCP会发送重复的ACK让对方知道收到一个失序报文段，并告诉对方自己希望收到的序号  
