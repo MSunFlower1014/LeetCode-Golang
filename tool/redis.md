@@ -38,6 +38,7 @@ LTRIM 修建列表长度，如 LTRIM myList 0 99 ,列表长度不会超过100
 LPOP LPUSH  ---  队列的左边入队或出队   
 BLPOP BRPOP  ---  阻塞获取左侧或右侧元素  
 LREM LSET  ---  删除或设置值  
+RPOPLPUSH  --- 弹出一个值并压入另一个list中，可用于实现队列时保存运行中任务信息
 
 ## 集合Sets
 哈希表实现，添加，删除以及测试复杂度为O(1)  
