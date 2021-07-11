@@ -17,31 +17,38 @@ package main
 输出：true
 */
 
+/*
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/balanced-binary-tree/solution/ping-heng-er-cha-shu-by-leetcode-solution/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
 func isBalanced(root *TreeNode) bool {
+	return height(root) >= 0
+}
+
+func height(root *TreeNode) int {
 	if root == nil {
-		return true
+		return 0
 	}
-	rootVal := root.Val
-	left := root.Left
-	right := root.Right
+	leftHeight := height(root.Left)
+	rightHeight := height(root.Right)
+	if leftHeight == -1 || rightHeight == -1 || abs(leftHeight-rightHeight) > 1 {
+		return -1
+	}
+	return max2(leftHeight, rightHeight) + 1
+}
 
-	result := true
-	if left != nil {
-		leftVal := left.Val
-		if rootVal < leftVal {
-			return false
-		} else {
-			result = result && isBalanced(left)
-		}
+func max2(x, y int) int {
+	if x > y {
+		return x
 	}
+	return y
+}
 
-	if right != nil {
-		rightVal := right.Val
-		if rootVal < rightVal {
-			return false
-		} else {
-			result = result && isBalanced(left)
-		}
+func abs(x int) int {
+	if x < 0 {
+		return -1 * x
 	}
-	return result
+	return x
 }
