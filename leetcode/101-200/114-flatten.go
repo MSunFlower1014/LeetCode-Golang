@@ -22,6 +22,25 @@ package main
 输入：root = [0]
 输出：[0]
 */
-func flatten(root *TreeNode) {
 
+/*
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/solution/er-cha-shu-zhan-kai-wei-lian-biao-by-leetcode-solu/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+func flatten(root *TreeNode) {
+	curr := root
+	for curr != nil {
+		if curr.Left != nil {
+			next := curr.Left
+			predecessor := next
+			for predecessor.Right != nil {
+				predecessor = predecessor.Right
+			}
+			predecessor.Right = curr.Right
+			curr.Left, curr.Right = nil, next
+		}
+		curr = curr.Right
+	}
 }
